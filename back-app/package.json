@@ -1,0 +1,23 @@
+{
+  "name": "what-do-you-want-to-watch",
+  "version": "1.0.0",
+  "description": "Finding a movie or show to watch",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SimBenoit/What-do-you-want-to-watch.git"
+  },
+  "author": "SimBenoit",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SimBenoit/What-do-you-want-to-watch/issues"
+  },
+  "homepage": "https://github.com/SimBenoit/What-do-you-want-to-watch#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  }
+}
