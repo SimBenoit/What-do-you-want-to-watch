@@ -14,7 +14,7 @@ import React, { useEffect, useState } from 'react';
         <div className="App">
           <header className="App-header">
           <img 
-                src="logo192.png" 
+                src="Borpa.png" 
                 alt="Rotating"
                 className="App-logo"
             />

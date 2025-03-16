@@ -3,19 +3,21 @@
 }
 
 .App-logo {
-  height: auto;
+  height: 200px;
+  width: 200px;
   pointer-events: none;
   animation: App-logo-spin infinite 5s linear;
 }
 
 
-@media (prefers-reduced-motion: no-preference) {
+/*@media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    width:  auto;
-    height: auto;
+    width:  500;
+    height: 500;
     animation: App-logo-spin infinite 4s linear;
   }
 }
+  */
 
 .App-header {
   background-color: #282c34;
