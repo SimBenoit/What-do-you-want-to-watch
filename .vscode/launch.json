@@ -4,15 +4,28 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-
         {
-            "type": "node",
+            "command": "npm start",
+            "name": "Start Frontend",
             "request": "launch",
-            "name": "Launch Program",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "program": "${file}"
-        }
-    ]
+            "type": "node-terminal",
+            "cwd": "${workspaceFolder}/front-app",
+        },
+        {
+            "command": "node ./index.js",
+            "name": "Start Backend",
+            "request": "launch",
+            "type": "node-terminal",
+            "cwd": "${workspaceFolder}/back-app",
+        },
+    ],
+    "compounds": [
+    {
+      "name": "Start Both (Frontend + Backend)",
+      "configurations": ["Start Frontend", "Start Backend"],
+      "stopAll": true
+    }
+]
+
+
 }

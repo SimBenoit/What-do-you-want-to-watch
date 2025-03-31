@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import DynamicImage from "./DynamicImage"
-import './App.css';
+import DynamicImage from "../DynamicImage"
+import '../App.css';
 
 
-  function App() {
+  function Borpa() {
     const [imageSrc, setImageSrc] = useState("Borpa.png");
 
     const changeImage = (newSource) => {
@@ -39,4 +39,4 @@ import './App.css';
   }
 
 
-  export default App;
+  export default Borpa;
