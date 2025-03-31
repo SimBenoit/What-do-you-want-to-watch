@@ -27,6 +27,14 @@ const Navbar = () => {
             Borpa
           </button>
         </li>
+        <li>
+          <button
+            onClick={() => navigate('/todo')}
+            className={isActive('/todo') ? 'nav-button active' : 'nav-button'}
+          >
+            TODO
+          </button>
+        </li>
       </ul>
     </nav>
   );

@@ -1,0 +1,56 @@
+/* TodoList.css */
+.todo-container {
+    padding: 1rem;
+  }
+
+  .todo-heading {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+  }
+
+  .todo-grid-header,
+  .todo-grid-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr 3fr 2fr 2fr;
+    background-color: #222;
+    border-left: 1px solid #d1d5db;
+    border-right: 1px solid #d1d5db;
+    text-align: center;
+
+  }
+
+  .todo-grid-header {
+    background-color: #222;
+    font-weight: 600;
+    border-top: 1px solid #d1d5db;
+    border-bottom: 1px solid #d1d5db;
+  }
+
+  .todo-grid-row {
+    border-bottom: 1px solid #d1d5db;
+  }
+
+  .todo-grid-header > div,
+  .todo-grid-row > div {
+    padding: 0.5rem;
+    border-right: 1px solid #e5e7eb;
+  }
+
+  .todo-grid-header > div:last-child,
+  .todo-grid-row > div:last-child {
+    border-right: none;
+  }
+
+  .todo-grid-row:nth-child(even) {
+    background-color: #111;
+  }
+
+  .todo-link {
+    color: #3b82f6;
+    text-decoration: none;
+  }
+
+  .todo-link:hover {
+    text-decoration: underline;
+  }

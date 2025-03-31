@@ -1,0 +1,23 @@
+.social-links {
+    position: fixed;
+    bottom: 1rem;
+    left: 1rem;
+    display: flex;
+    gap: 1rem;
+    z-index: 15;
+  }
+
+  .social-links a svg {
+    width: 2rem;
+    height: 2em;
+    transition: color 0.3s ease;
+    color: #e5e7eb;
+  }
+
+  .social-links a:visited svg {
+    color: #e5e7eb;
+  }
+
+  .social-links a:hover svg {
+    color: #0062ff;
+  }
