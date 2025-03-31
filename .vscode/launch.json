@@ -9,14 +9,14 @@
             "name": "Start Frontend",
             "request": "launch",
             "type": "node-terminal",
-            "cwd": "${workspaceFolder}/front-app",
+            "cwd": "${workspaceFolder}/frontend",
         },
         {
             "command": "node ./index.js",
             "name": "Start Backend",
             "request": "launch",
             "type": "node-terminal",
-            "cwd": "${workspaceFolder}/back-app",
+            "cwd": "${workspaceFolder}/backend",
         },
     ],
     "compounds": [

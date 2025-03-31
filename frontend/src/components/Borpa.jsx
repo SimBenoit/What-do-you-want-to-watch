@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import DynamicImage from "../DynamicImage"
-import '../App.css';
+import DynamicImage from "./DynamicImage"
+import './Borpa.css';  // Import the CSS file for styling
 
 
   function Borpa() {
@@ -17,7 +17,7 @@ import '../App.css';
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const result = await response.json();
-        console.log(result);  // Print to console  
+        console.log(result);  // Print to console
         changeImage(result.name);
       } catch (error) {
         console.error('Error:', error);
@@ -26,14 +26,14 @@ import '../App.css';
 
 
     return (
-      <div className="App">
-        <header className="App-header">
-        <DynamicImage 
+      <div>
+        <header className="borpa-header">
+        <DynamicImage
         link={imageSrc}
         />
           <h1>We exist in the context right now</h1>
         </header>
-        <button className="App-title" onClick={() => ButtonClicked()}>There is nothing to worry about</button>
+        <button className="borpa-title" onClick={() => ButtonClicked()}>There is nothing to worry about</button>
       </div>
     );
   }

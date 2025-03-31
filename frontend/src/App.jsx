@@ -1,18 +1,32 @@
 import React from 'react';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Borpa from './components/Borpa';
+import About from './components/About';
+import './App.css';
+import { useEffect, useState } from 'react';
+
 
 const App = () => {
+  const [animate, setAnimate] = useState(false);
+
+  useEffect(() => {
+    setAnimate(true); // trigger animation on mount
+  }, []);
+
   return (
-      <div style={{ marginLeft: '200px' }}>
-      <Navbar/>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/borpa" element={<Borpa />} />
-      </Routes>
-      </div>
+    <div className="App">
+      <div className="App-background"/>
+        <Navbar/>
+        <div className={animate ? 'slide-in-once App-content' : 'App-content'} style={{ marginLeft: '220px' }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/borpa" element={<Borpa />} />
+            <Route path="/about" element={<About />} />
+          </Routes>
+        </div>
+    </div>
   );
 };
 

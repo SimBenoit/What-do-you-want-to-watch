@@ -1,17 +1,34 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import "./Navbar.css";  // For styling
+import { useNavigate, useLocation } from "react-router-dom";
+import "./Navbar.css";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const isActive = (path) => location.pathname === path;
+
   return (
-        <nav className="nav">
-          <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/about">About</Link></li>
-            <li><Link to="/contact">Contact</Link></li>
-            <li><Link to="/borpa">Borpa</Link></li>
-          </ul>
-        </nav>
+    <nav className="nav">
+      <ul>
+        <li>
+          <button
+            onClick={() => navigate('/')}
+            className={isActive('/') ? 'nav-button active' : 'nav-button'}
+          >
+            Home
+          </button>
+        </li>
+        <li>
+          <button
+            onClick={() => navigate('/borpa')}
+            className={isActive('/borpa') ? 'nav-button active' : 'nav-button'}
+          >
+            Borpa
+          </button>
+        </li>
+      </ul>
+    </nav>
   );
 };
 

@@ -1,0 +1,63 @@
+/* Root font variables */
+:root {
+    --font-title: 'Roboto', sans-serif;
+    --font-body: 'Roboto', sans-serif;
+    --font-size-title: 4.5rem;
+    --font-size-heading: 2rem;
+    --font-size-subheading: 1.75rem;
+    --font-size-body: 1.25rem;
+    --font-size-small: 0.875rem;
+  }
+
+  /* General resets and base styles */
+  body {
+    font-family: var(--font-body);
+    font-size: var(--font-size-body);
+    line-height: 1.6;
+    color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+  }
+
+  /* Titles and headings */
+  .title {
+    font-family: var(--font-title);
+    font-size: var(--font-size-title);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-decoration: underline;
+    text-align: center;
+  }
+
+  h1, .h1 {
+    font-size: var(--font-size-title);
+    font-weight: 700;
+    font-family: var(--font-title);
+  }
+
+  h2, .h2 {
+    font-size: var(--font-size-heading);
+    font-weight: 600;
+    font-family: var(--font-title);
+  }
+
+  h3, .h3 {
+    font-size: var(--font-size-subheading);
+    font-weight: 500;
+    font-family: var(--font-title);
+  }
+
+  /* Paragraph / body text */
+  p, .body-text {
+    font-size: var(--font-size-body);
+    font-family: var(--font-body);
+    margin-bottom: 1rem;
+  }
+
+  /* Smaller text */
+  .small-text {
+    font-size: var(--font-size-small);
+    font-family: var(--font-body);
+    opacity: 0.8;
+  }
