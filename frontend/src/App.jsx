@@ -11,10 +11,23 @@ import TodoComp from './components/TodoComp';
 
 const App = () => {
   const [animate, setAnimate] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setAnimate(true); // trigger animation on mount
+    setAnimate(true);
   }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000); // Adjust the delay as needed
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <Borpa />;
+  }
 
   return (
     <div className="App">
@@ -24,7 +37,6 @@ const App = () => {
         <div className={animate ? 'slide-in-once App-content' : 'App-content'} style={{ marginLeft: '220px' }}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/borpa" element={<Borpa />} />
             <Route path="/todo" element={<TodoComp />} />
           </Routes>
         </div>

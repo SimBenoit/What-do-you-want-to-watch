@@ -11,8 +11,10 @@ const Navbar = () => {
   return (
     <nav className="nav">
       <div className="circle-wrapper">
-      <img src="SimonPictureGradRing.jpg" alt="Profile"/>
+        <img src="SimonPictureGradRing.jpg" alt="Profile"/>
       </div>
+      <h3>Simon Benoit</h3>
+      <h4>Software Engineer</h4>
       <ul>
         <li>
           <button
@@ -20,14 +22,6 @@ const Navbar = () => {
             className={isActive('/') ? 'nav-button active' : 'nav-button'}
           >
             Home
-          </button>
-        </li>
-        <li>
-          <button
-            onClick={() => navigate('/borpa')}
-            className={isActive('/borpa') ? 'nav-button active' : 'nav-button'}
-          >
-            Borpa
           </button>
         </li>
         <li>
