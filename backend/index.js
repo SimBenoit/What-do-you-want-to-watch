@@ -31,7 +31,7 @@ app.post('/api/contact', async (req, res) => {
   const mailOptions = {
     from: email,
     to: mailuser,
-    subject: `Contact Form Message from ${name}`,
+    subject: `New Contact-me message from ${name}`,
     text: message,
   };
 
