@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import DynamicImage from "./DynamicImage"
 import './Borpa.css';  // Import the CSS file for styling
 

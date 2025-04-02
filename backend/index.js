@@ -1,28 +1,50 @@
+require('dotenv').config();
 const express = require('express');
-    const cors = require('cors');
-    const app = express();
-    const port = 5000;
-    let randomNum;
-    let currentIndex = 0;
+const cors = require('cors');
+const nodemailer = require('nodemailer');
+const bodyParser = require('body-parser');
+const mailuser = process.env.USER_EMAIL;
+const mailpass = process.env.USER_PASS;
 
-    app.use(cors());
+const port = 5000;
 
-    const data = [
-      { id: 1, name: 'Borpa.png' },
-      { id: 2, name: 'BorpaChef.gif' },
-      { id: 3, name: 'BorpaCop.gif' },
-      { id: 4, name: 'BorpaKid.jpg' },
-    ];
+const app = express();
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true
+}));
+app.use(express.json());
 
-    app.get('/api/items', (req, res) => {
-      do{
-      randomNum = Math.floor(Math.random() *4);
-      } while(currentIndex == randomNum);
-      currentIndex=randomNum;
-      //console.log(randomNum);
-      res.json(data.at(randomNum));
-    });
 
-    app.listen(port, () => {
-      console.log(`Server is running on http://localhost:${port}`);
-    });
+app.post('/api/contact', async (req, res) => {
+
+  const { name, email, message } = req.body;
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: mailuser,
+      pass: mailpass,
+    },
+  });
+
+  const mailOptions = {
+    from: email,
+    to: mailuser,
+    subject: `Contact Form Message from ${name}`,
+    text: message,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    res.status(200).send('Email sent!');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error sending email');
+  }
+});
+
+app.listen(port, () => {
+
+  console.log(`Server is running on http://localhost:${port}`);
+});
