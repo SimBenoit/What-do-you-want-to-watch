@@ -1,9 +1,15 @@
 import React from "react";
-import './Text.css'; // Assuming you have a CSS file for styling
+import './Text.css';
+import './Home.css';
 
 const Home = () => {
   return (
     <div>
+      <div className="image-slider">
+      <img src="SimonMontrealSnow.jpg" alt="image1" className="slide-image" />
+      <img src="SimonCoffeeShop.jpg" alt="image2" className="slide-image" />
+      <img src="SimonAirport.jpg" alt="image3" className="slide-image" />
+      </div>
       <h1 className="title">Armin's den</h1>
 
       <h2 style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Welcome to my website:</h2>

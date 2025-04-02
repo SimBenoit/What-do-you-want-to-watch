@@ -10,6 +10,9 @@ const Navbar = () => {
 
   return (
     <nav className="nav">
+      <div className="circle-wrapper">
+      <img src="SimonPictureGradRing.jpg" alt="Profile"/>
+      </div>
       <ul>
         <li>
           <button
