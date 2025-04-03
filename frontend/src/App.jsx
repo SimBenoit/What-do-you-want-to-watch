@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
+import ContactMe from './components/ContactMe';
 import Borpa from './components/Borpa';
 import SocialLinks from './components/SocialLinks';
 import './App.css';
@@ -20,7 +21,7 @@ const App = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2000); // Adjust the delay as needed
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -38,6 +39,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/todo" element={<TodoComp />} />
+            <Route path="/contact" element={<ContactMe />} />
           </Routes>
         </div>
     </div>

@@ -32,6 +32,14 @@ const Navbar = () => {
             TODO
           </button>
         </li>
+        <li>
+          <button
+            onClick={() => navigate('/contact')}
+            className={isActive('/contact') ? 'nav-button active' : 'nav-button'}
+          >
+            Contact me
+          </button>
+        </li>
       </ul>
     </nav>
   );
