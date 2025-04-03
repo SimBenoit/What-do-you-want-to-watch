@@ -1,12 +1,13 @@
 import React from 'react';
 import DynamicImage from "./DynamicImage"
-import './Borpa.css';  // Import the CSS file for styling
+import './Borpa.css';
+import '../App.css';
 
 
   function Borpa() {
 
     return (
-      <div>
+      <div className='App-background'>
         <header className="borpa-header">
         <DynamicImage
         link={"Borpa.png"}

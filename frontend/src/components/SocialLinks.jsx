@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, Download } from "lucide-react";
+import { Github, Linkedin, Download } from "lucide-react";
 import "./SocialLinks.css";
 
 

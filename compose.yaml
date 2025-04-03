@@ -1,19 +1,32 @@
-version: '1.0'
-
 services:
 
-  front-app:
-    build: ./front-app
+  frontend:
+    build: ./frontend
     ports:
       - "3000:3000"
     volumes:
-      - ./front-app:/app
+      - ./frontend:/app
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/healthStatus.html"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     command: npm start
 
-  back-app:
-    build: ./back-app
+  backend:
+    build: ./backend
     ports:
       - "5000:5000"
+    env_file:
+      - .env
+    environment:
+      - USER_MAIL=${USER_MAIL}
+      - USER_PASS=${USER_PASS}
     volumes:
-      - ./back-app:/app
+      - ./backend:/app
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     command: node ./index.js
