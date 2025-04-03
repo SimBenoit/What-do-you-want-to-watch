@@ -1,0 +1,65 @@
+name: Docker Full Health Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+    
+
+jobs:
+  healthcheck:
+    runs-on: ubuntu-latest
+    env:
+      USER_MAIL: ${{ secrets.USER_MAIL }} 
+      USER_PASS: ${{ secrets.USER_PASS }}
+
+    steps:
+      - name: update docker compose
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/download/v2.24.6/docker-compose-linux-x86_64" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+    
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Create .env file (if needed)
+        run: |
+          echo "USER_MAIL: ${{ secrets.USER_MAIL }} \n USER_PASS: ${{ secrets.USER_PASS }}" > .env
+
+      - name: Start containers
+        run: docker-compose up --build -d
+
+      - name: Wait for frontend and backend health
+        run: |
+          wait_for_health() {
+            local name=$1
+            local url=$2
+            for i in {1..40}; do
+              echo "🔄 Checking $name health (attempt $i)..."
+              if curl -sSf "$url"; then
+                echo "✅ $name is healthy!"
+                return 0
+              fi
+              sleep 3
+            done
+            echo "❌ $name did not become healthy in time"
+            return 1
+          }
+
+          wait_for_health "frontend" "http://localhost:3000/healthStatus.html" &
+          wait_for_health "backend" "http://localhost:5000/health" &
+          
+          wait -n || {
+            docker-compose logs
+            exit 1
+          }
+
+      - name: Stop containers
+        if: always()
+        run: docker-compose down
+
