@@ -7,13 +7,25 @@ const mailuser = process.env.USER_EMAIL;
 const mailpass = process.env.USER_PASS;
 
 const port = 5000;
+const allowedOrigins = [
+  'https://arminsden.ca',
+  'http://localhost:3000',
+  'http://127.0.0.1',
+  'http://frontend.arminsden.local'
+];
 
 const app = express();
+app.use(express.json());
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
-app.use(express.json());
 
 
 app.post('/api/contact', async (req, res) => {
