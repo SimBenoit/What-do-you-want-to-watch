@@ -1,0 +1,20 @@
+# This is a Docker Compose file for a production environment.
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: /Dockerfile.prod
+    ports:
+      - '80:80'
+    environment:
+      - NODE_ENV=production
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend:/app
+    command: node ./index.js
