@@ -1,0 +1,114 @@
+name: Build, Push, Deploy with Terraform
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+
+env:
+  AWS_REGION: us-east-1
+  ECR_REPO: my-frontend
+  CLUSTER_NAME: PortfolioCluster
+  SERVICE_NAME: nginx-frontend-service
+  ZONE_ID: Z0772065FWW4QXORF6MY
+  DOMAIN: arminsden.ca
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install Node dependencies
+      run: npm ci
+
+    - name: Build app
+      run: npm run build
+
+    - name: Configure AWS credentials with role assumption
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.IAM_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.IAM_ACCES_KEY_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+        role-to-assume: arn:aws:iam::521673981088:role/Admin
+        role-session-name: GitActionsAdmin
+
+
+    - name: Login to Amazon ECR
+      run: |
+        aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $IMAGE_NAME
+
+    - name: Build and Push Docker Image
+      run: |
+        docker build -t $IMAGE_NAME:${{ github.ref_name }} .
+        docker push $IMAGE_NAME:${{ github.ref_name }}
+
+    - name: Set Terraform Image Variable
+      run: |
+        echo 'frontend_image = "${{ env.IMAGE_NAME }}:${{ github.ref_name }}"' > terraform/image.auto.tfvars
+
+    - name: Terraform Init
+      run: terraform -chdir=terraform init
+
+    - name: Terraform Apply (Deploy ECS Update)
+      run: terraform -chdir=terraform apply -auto-approve
+
+    - name: Get ECS Public IP
+      id: get_ip
+      run: |
+        TASK_ID=$(aws ecs list-tasks --cluster $CLUSTER_NAME --service-name $SERVICE_NAME --query "taskArns[0]" --output text)
+        ENI_ID=$(aws ecs describe-tasks --cluster $CLUSTER_NAME --tasks $TASK_ID --query "tasks[0].attachments[0].details[?name=='networkInterfaceId'].value" --output text)
+        IP=$(aws ec2 describe-network-interfaces --network-interface-ids $ENI_ID --query "NetworkInterfaces[0].Association.PublicIp" --output text)
+        echo "PUBLIC_IP=$IP" >> $GITHUB_ENV
+
+    - name: Update Route 53 Record
+      run: |
+        cat > change-batch.json <<EOF
+        {
+          "Comment": "Update A record for ${DOMAIN} and CNAME for www.${DOMAIN}",
+          "Changes": [
+            {
+              "Action": "UPSERT",
+              "ResourceRecordSet": {
+                "Name": "$DOMAIN",
+                "Type": "A",
+                "TTL": 300,
+                "ResourceRecords": [
+                  {
+                    "Value": "${{ env.PUBLIC_IP }}"
+                  }
+                ]
+              }
+            },
+            {
+              "Action": "UPSERT",
+              "ResourceRecordSet": {
+                "Name": "www.$DOMAIN",
+                "Type": "CNAME",
+                "TTL": 300,
+                "ResourceRecords": [
+                  {
+                    "Value": "$DOMAIN."
+                  }
+                ]
+              }
+            }
+          ]
+        }
+        EOF
+
+        aws route53 change-resource-record-sets \
+          --hosted-zone-id $ZONE_ID \
+          --change-batch file://change-batch.json
+
+    #- name: Clean up old ECR images
+    #  run: |
+    #    IMAGE_TAGS=$(aws ecr list-images --repository-name $ECR_REPO --query 'imageIds[?imageTag!=`"${{ github.ref_name }}"`]' --output json)
+    #    if [[ "$IMAGE_TAGS" != "[]" ]]; then
+    #      aws ecr batch-delete-image --repository-name $ECR_REPO --image-ids "$IMAGE_TAGS"
+    #    fi

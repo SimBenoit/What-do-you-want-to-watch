@@ -25,14 +25,6 @@ resource "aws_ecs_task_definition" "nginx" {
           readOnly      = true
         }
       ]
-      logConfiguration = {
-        logDriver = "awslogs"
-        options = {
-          awslogs-group         = "/ecs/nginx"
-          awslogs-region        = var.region
-          awslogs-stream-prefix = "nginx"
-        }
-      }
     }
   ])
 

@@ -65,3 +65,15 @@ variable "certbot_task_role_arn" {
   type        = string
 
 }
+
+variable "nginx_sg_id" {
+  description  = "The id of the security group that does NGINX and other front-facing services"
+  type         = string
+
+}
+
+variable "efs_id" {
+  description  = "The id of the EFS used for the NGINX"
+  type         = string
+
+}

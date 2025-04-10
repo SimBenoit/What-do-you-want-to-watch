@@ -53,8 +53,8 @@ module "nginx" {
 
   cluster_id          = var.frontend_cluster_id
   subnet_ids          = var.public_subnet_ids
-  efs_id              = module.efs.efs_id
-  security_group_id   = module.security.nginx_sg_id
+  efs_id              = var.efs_id
+  security_group_id   = var.nginx_sg_id
   frontend_image      = var.frontend_image
   execution_role_arn  = var.ecs_execution_arn
   task_role_arn       = var.ecs_execution_arn
