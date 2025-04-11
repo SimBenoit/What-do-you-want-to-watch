@@ -23,8 +23,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Build app
+    - name: Install Node dependencies
+      run: npm ci
+      working-directory: frontend
+
+    - name: Install Node dependencies
       run: npm run build
+      working-directory: frontend
 
     - name: Configure AWS credentials with role assumption
       uses: aws-actions/configure-aws-credentials@v2
