@@ -74,7 +74,7 @@ jobs:
         -var="certbot_image=NA" \
         -var="route53_zone_id=NA" \
         -var="ecr_repository=${{ env.ECR_REPO }}" \
-        -var="frontend_cluster_id=${{ secret.TF_VAR_FRONTEND_CLUSTER_ID }}" \
+        -var="frontend_cluster_id=${{ secrets.TF_VAR_FRONTEND_CLUSTER_ID }}" \
       
 
     - name: Get ECS Public IP
