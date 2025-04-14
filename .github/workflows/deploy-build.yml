@@ -31,6 +31,9 @@ jobs:
       run: npm run build
       working-directory: frontend
 
+    - name: Install Terraform
+      uses: hashicorp/setup-terraform@v3
+
     - name: Configure AWS credentials with role assumption
       uses: aws-actions/configure-aws-credentials@v2
       with:
@@ -61,9 +64,11 @@ jobs:
 
     - name: Terraform Init
       run: terraform -chdir=terraform init
+      working-directory: terraform/environment/simon-aws-account
 
     - name: Terraform Apply (Deploy ECS Update)
       run: terraform -chdir=terraform apply -auto-approve
+      working-directory: terraform/environment/simon-aws-account
 
     - name: Get ECS Public IP
       id: get_ip
