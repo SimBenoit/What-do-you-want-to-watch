@@ -1,6 +1,6 @@
 provider "aws" {
     region = "us-east-1"
-    profile = "default"
+    profile = var.aws_profile != "" ? var.aws_profile : null
     assume_role {
       role_arn = "arn:aws:iam::521673981088:role/Admin"
     }
