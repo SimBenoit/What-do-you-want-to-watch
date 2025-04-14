@@ -77,3 +77,9 @@ variable "efs_id" {
   type         = string
 
 }
+
+variable "aws_profile" {
+  description  = "AWS profile used if in local"
+  type         = string
+
+}
