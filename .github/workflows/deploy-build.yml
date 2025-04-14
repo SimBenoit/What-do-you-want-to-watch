@@ -77,6 +77,11 @@ jobs:
         -var="frontend_cluster_id=${{ secrets.TF_VAR_FRONTEND_CLUSTER_ID }}" \
         -var="efs_id=fs-0eae8ec2965b2cf8d" \
         -var="nginx_sg_id=sg-04f9d7c41d827fe19" 
+
+    - name: Wait for ECS to stabilize
+      run: |
+        echo "Waiting 5 minutes for ECS service to become available..."
+        sleep 300
       
 
     - name: Get ECS Public IP
