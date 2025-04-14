@@ -67,8 +67,8 @@ jobs:
         -var="cert_email=simbenoit325@gmail.com" \
         -var="domain=${{ env.DOMAIN }}" \
         -var="vpc_id=NA" \
-        -var='public_subnet_ids=[]' \
-        -var='private_subnet_ids=["subnet-054343df4ee33df78","subnet-0f4145869f056dbd0"]' \
+        -var='public_subnet_ids=["subnet-054343df4ee33df78","subnet-0f4145869f056dbd0"]' \
+        -var='private_subnet_ids=[]' \
         -var="ecs_execution_arn=${{ secrets.TF_VAR_EXECUTION_ROLE_ARN }}" \
         -var="certbot_task_role_arn=${{ secrets.TF_VAR_EXECUTION_ROLE_ARN }}" \
         -var="certbot_image=NA" \
