@@ -54,7 +54,7 @@ jobs:
     - name: Build and Push Docker Image
       working-directory: frontend
       run: |
-        docker build -t ${{ env.IMAGE_NAME }}:latest .
+        docker build -t ${{ env.IMAGE_NAME }}:latest -f Dockerfile.prod .
         docker push ${{ env.IMAGE_NAME }}:latest
       
 
