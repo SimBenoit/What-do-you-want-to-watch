@@ -59,6 +59,8 @@ module "nginx" {
   execution_role_arn  = var.ecs_execution_arn
   task_role_arn       = var.ecs_execution_arn
   region              = var.aws_region
+  lambda_secret       = var.lambda_secret
+  lambda_function_url = var.lambda_function_url
 }
 
 ######################
