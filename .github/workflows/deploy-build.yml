@@ -23,42 +23,66 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Install Node dependencies
-      run: npm ci
-      working-directory: frontend
-
-    - name: Install Node dependencies
-      run: npm run build
-      working-directory: frontend
+    - name: Install Terraform
+      uses: hashicorp/setup-terraform@v3
 
     - name: Configure AWS credentials with role assumption
       uses: aws-actions/configure-aws-credentials@v2
       with:
         aws-access-key-id: ${{ secrets.IAM_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.IAM_ACCES_KEY_KEY }}
+        aws-secret-access-key: ${{ secrets.IAM_ACCESS_KEY_KEY }}
         aws-region: ${{ env.AWS_REGION }}
         role-to-assume: arn:aws:iam::521673981088:role/Admin
         role-session-name: GitActionsAdmin
-
+        role-duration-seconds: 900
+        
+    - name: Set image name
+      run: echo "IMAGE_NAME=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/my-frontend" >> $GITHUB_ENV
 
     - name: Login to Amazon ECR
       run: |
         aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $IMAGE_NAME
 
     - name: Build and Push Docker Image
+      working-directory: frontend
       run: |
-        docker build -t $IMAGE_NAME:${{ github.ref_name }} .
-        docker push $IMAGE_NAME:${{ github.ref_name }}
+        docker build -t ${{ env.IMAGE_NAME }}:latest -f Dockerfile.prod .
+        docker push ${{ env.IMAGE_NAME }}:latest
+      
 
     - name: Set Terraform Image Variable
       run: |
-        echo 'frontend_image = "${{ env.IMAGE_NAME }}:${{ github.ref_name }}"' > terraform/image.auto.tfvars
+        echo 'frontend_image = "${{ env.IMAGE_NAME }}:latest"' > terraform/image.auto.tfvars
 
     - name: Terraform Init
-      run: terraform -chdir=terraform init
+      run: terraform init
+      working-directory: terraform/environments/simon-aws-account
 
     - name: Terraform Apply (Deploy ECS Update)
-      run: terraform -chdir=terraform apply -auto-approve
+      working-directory: terraform/environments/simon-aws-account
+      run: |
+        terraform apply -auto-approve \
+        -var="aws_region=${{ env.AWS_REGION }}" \
+        -var="frontend_image=${{ env.IMAGE_NAME }}" \
+        -var="cert_email=simbenoit325@gmail.com" \
+        -var="domain=${{ env.DOMAIN }}" \
+        -var="vpc_id=NA" \
+        -var='public_subnet_ids=["subnet-054343df4ee33df78","subnet-0f4145869f056dbd0"]' \
+        -var='private_subnet_ids=[]' \
+        -var="ecs_execution_arn=${{ secrets.TF_VAR_EXECUTION_ROLE_ARN }}" \
+        -var="certbot_task_role_arn=${{ secrets.TF_VAR_EXECUTION_ROLE_ARN }}" \
+        -var="certbot_image=NA" \
+        -var="route53_zone_id=NA" \
+        -var="ecr_repository=${{ env.ECR_REPO }}" \
+        -var="frontend_cluster_id=${{ secrets.TF_VAR_FRONTEND_CLUSTER_ID }}" \
+        -var="efs_id=fs-0eae8ec2965b2cf8d" \
+        -var="nginx_sg_id=sg-04f9d7c41d827fe19" 
+
+    - name: Wait for ECS to stabilize
+      run: |
+        echo "Waiting 5 minutes for ECS service to become available..."
+        sleep 300
+      
 
     - name: Get ECS Public IP
       id: get_ip
