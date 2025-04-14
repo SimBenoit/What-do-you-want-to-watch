@@ -65,7 +65,7 @@ jobs:
         -var="aws_region=${{ env.AWS_REGION }}" \
         -var="frontend_image=${{ env.IMAGE_NAME }}" \
         -var="cert_email=simbenoit325@gmail.com" \
-        -var="domain=${{ arminsden.ca}}" \
+        -var="domain=${{ env.DOMAIN }}" \
         -var="vpc_id=NA" \
         -var="private_subnet_ids=NA" \
         -var="privare_subnet_ids=["subnet-054343df4ee33df78","subnet-0f4145869f056dbd0"]" \
