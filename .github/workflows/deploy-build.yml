@@ -64,7 +64,7 @@ jobs:
 
     - name: Terraform Init
       run: terraform -chdir=terraform init
-      working-directory: terraform/environment/simon-aws-account
+      working-directory: terraform/environments/simon-aws-account
 
     - name: Terraform Apply (Deploy ECS Update)
       run: terraform -chdir=terraform apply -auto-approve
