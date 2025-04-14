@@ -75,6 +75,8 @@ jobs:
         -var="route53_zone_id=NA" \
         -var="ecr_repository=${{ env.ECR_REPO }}" \
         -var="frontend_cluster_id=${{ secrets.TF_VAR_FRONTEND_CLUSTER_ID }}" \
+        -var="efs_id=fs-0eae8ec2965b2cf8d" \
+        -var="nginx_sg_id=sg-04f9d7c41d827fe19"
       
 
     - name: Get ECS Public IP
