@@ -31,13 +31,6 @@ jobs:
       run: npm run build
       working-directory: frontend
 
-    - name: Debug credentials
-      run: aws sts get-caller-identity
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.IAM_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.IAM_ACCESS_KEY_KEY }}
-
-
     - name: Configure AWS credentials with role assumption
       uses: aws-actions/configure-aws-credentials@v2
       with:
@@ -47,7 +40,9 @@ jobs:
         role-to-assume: arn:aws:iam::521673981088:role/Admin
         role-session-name: GitActionsAdmin
         role-duration-seconds: 900
-
+        
+    - name: Set image name
+      run: echo "IMAGE_NAME=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/my-frontend" >> $GITHUB_ENV
 
     - name: Login to Amazon ECR
       run: |
