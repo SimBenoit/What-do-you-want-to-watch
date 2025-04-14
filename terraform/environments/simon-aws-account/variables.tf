@@ -84,3 +84,13 @@ variable "aws_profile" {
   default      = ""
 
 }
+
+variable "lambda_function_url" {
+  description = "URL for the lambda email function"
+  type        = string
+}
+
+variable "lambda_secret" {
+  description = "Secret for the lambda function"
+  type        = string
+}
