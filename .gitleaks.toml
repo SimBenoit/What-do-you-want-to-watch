@@ -1,0 +1,12 @@
+title = "Gitleaks Config"
+
+[allowlist]
+# Exact values to ignore (like your reCAPTCHA site key)
+values = [
+  "6LfIwRgrAAAAAFIRT-smi_pE0P0X1PvmSYlyEnqb"
+]
+
+[report]
+format = "json"
+path = "gitleaks-report.json"
+redact = true

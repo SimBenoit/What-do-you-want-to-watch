@@ -6,13 +6,13 @@ on:
   pull_request:
     branches: [main]
 
-    
+
 
 jobs:
   healthcheck:
     runs-on: ubuntu-latest
     env:
-      USER_MAIL: ${{ secrets.USER_MAIL }} 
+      USER_MAIL: ${{ secrets.USER_MAIL }}
       USER_PASS: ${{ secrets.USER_PASS }}
 
     steps:
@@ -20,7 +20,7 @@ jobs:
         run: |
           sudo curl -L "https://github.com/docker/compose/releases/download/v2.24.6/docker-compose-linux-x86_64" -o /usr/local/bin/docker-compose
           sudo chmod +x /usr/local/bin/docker-compose
-    
+
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -53,7 +53,7 @@ jobs:
 
           wait_for_health "frontend" "http://localhost:3000/healthStatus.html" &
           wait_for_health "backend" "http://localhost:5000/health" &
-          
+
           wait -n || {
             docker-compose logs
             exit 1
@@ -62,4 +62,3 @@ jobs:
       - name: Stop containers
         if: always()
         run: docker-compose down
-

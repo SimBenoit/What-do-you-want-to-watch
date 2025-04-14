@@ -25,6 +25,16 @@ resource "aws_ecs_task_definition" "nginx" {
           readOnly      = true
         }
       ]
+      environment = [
+      {
+        name  = "LAMBDA_URL"
+        value = var.lambda_function_url
+      },
+      {
+        name  = "LAMBDA_SECRET"
+        value = var.lambda_secret
+      }
+    ]
     }
   ])
 
