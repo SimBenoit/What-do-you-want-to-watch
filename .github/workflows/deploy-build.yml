@@ -78,7 +78,7 @@ jobs:
         -var="efs_id=fs-0eae8ec2965b2cf8d" \
         -var="nginx_sg_id=sg-04f9d7c41d827fe19" \
         -var="lambda_function_url=${{ secrets.TF_VAR_LAMBDA_FUNCTION_URL }}" \
-        -var="lambda_secret=${{ secrets.TF_VAR_LAMBDA_SECRETS }}"
+        -var="lambda_secret=${{ secrets.TF_VAR_LAMBDA_SECRET }}"
 
     - name: Wait for ECS to stabilize
       run: |
