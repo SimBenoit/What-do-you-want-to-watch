@@ -46,6 +46,7 @@ jobs:
         aws-region: ${{ env.AWS_REGION }}
         role-to-assume: arn:aws:iam::521673981088:role/Admin
         role-session-name: GitActionsAdmin
+        role-duration-seconds: 900
 
 
     - name: Login to Amazon ECR
