@@ -67,8 +67,12 @@ jobs:
       working-directory: terraform/environments/simon-aws-account
 
     - name: Terraform Apply (Deploy ECS Update)
-      run: terraform apply -auto-approve
       working-directory: terraform/environments/simon-aws-account
+      run: |
+        terraform apply -auto-approve \
+        -var="aws_region=${{ env.AWS_REGION }}" \
+        -var="frontend_image=${{ env.IMAGE_NAME }}"
+      
 
     - name: Get ECS Public IP
       id: get_ip
