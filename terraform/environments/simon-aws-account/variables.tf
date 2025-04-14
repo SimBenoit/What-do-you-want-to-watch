@@ -81,5 +81,6 @@ variable "efs_id" {
 variable "aws_profile" {
   description  = "AWS profile used if in local"
   type         = string
+  default      = ""
 
 }
