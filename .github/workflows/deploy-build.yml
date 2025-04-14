@@ -63,11 +63,11 @@ jobs:
         echo 'frontend_image = "${{ env.IMAGE_NAME }}:latest"' > terraform/image.auto.tfvars
 
     - name: Terraform Init
-      run: terraform -chdir=terraform init
+      run: terraform init
       working-directory: terraform/environments/simon-aws-account
 
     - name: Terraform Apply (Deploy ECS Update)
-      run: terraform -chdir=terraform apply -auto-approve
+      run: terraform apply -auto-approve
       working-directory: terraform/environment/simon-aws-account
 
     - name: Get ECS Public IP
