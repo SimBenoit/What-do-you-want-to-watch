@@ -1,5 +1,7 @@
 server {
-    error_log /var/log/nginx/error.log debug;
+    error_log /dev/stderr debug;
+    access_log /dev/stdout;
+
 
     listen 443 ssl;
     server_name arminsden.ca;
