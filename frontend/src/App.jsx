@@ -5,6 +5,7 @@ import Home from './components/Home';
 import ContactMe from './components/ContactMe';
 import Borpa from './components/Borpa';
 import SocialLinks from './components/SocialLinks';
+import Jetwatch from './components/Jetwatch';
 import './App.css';
 import { useEffect, useState } from 'react';
 import TodoComp from './components/TodoComp';
@@ -40,6 +41,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/todo" element={<TodoComp />} />
             <Route path="/contact" element={<ContactMe />} />
+            <Route path="/jetwatch" element={<Jetwatch />} />
           </Routes>
         </div>
     </div>

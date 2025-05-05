@@ -34,6 +34,14 @@ const Navbar = () => {
         </li>
         <li>
           <button
+            onClick={() => navigate('/jetwatch')}
+            className={isActive('/jetwatch') ? 'nav-button active' : 'nav-button'}
+          >
+            Jetwatch
+          </button>
+        </li>
+        <li>
+          <button
             onClick={() => navigate('/contact')}
             className={isActive('/contact') ? 'nav-button active' : 'nav-button'}
           >

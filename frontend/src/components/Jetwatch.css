@@ -1,0 +1,8 @@
+.map-container {
+    position: relative;
+    top: 0;
+    left: 0px; /* Adjust if sidebar width is different */
+    width: calc(100vw - 275px);
+    height: 100vh;
+    z-index: 10;
+  }
