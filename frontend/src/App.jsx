@@ -13,6 +13,7 @@ import TodoComp from './components/TodoComp';
 const App = () => {
   const [animate, setAnimate] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     setAnimate(true);
@@ -33,8 +34,13 @@ const App = () => {
   return (
     <div className="App">
       <div className="App-background"/>
-        <Navbar/>
-        <SocialLinks/>
+      <button className="mobile-toggle" onClick={() => setIsOpen(!isOpen)}>
+          ☰
+        </button>
+        <aside className={`side-container ${isOpen ? 'open' : ''}`}>
+      <Navbar />
+      <SocialLinks />
+      </aside>
         <div className={animate ? 'slide-in-once App-content' : 'App-content'} style={{ marginLeft: '220px' }}>
           <Routes>
             <Route path="/" element={<Home />} />
